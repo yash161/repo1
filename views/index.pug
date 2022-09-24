@@ -1,0 +1,55 @@
+//- index.pug
+doctype html
+html
+  head
+    title COURIER
+    style
+      include ../static/style.css
+  body
+    nav#navbar
+        ul
+            div#logo
+            li #[a(href="/login") Login]
+            li #[a(href="/reg") Register]
+            li #[a(href="/") Home]
+            li #[a(href="/book") BookOrder]
+             li #[a(href="/update") Update Order Information]
+             li #[a(href="/del") Delete Order Information]
+             li #[a(href="/disp") Disp Order Information]
+            li #[a(href="/") Contact Us]
+    
+    section#introSection
+        div MicroCouriers 
+        div.small Book , Pay and Track orders online
+
+    section#missionSection
+        h2 Our Services
+        div.card
+            h3 Digital Payment
+            div.card-box
+                div.card-img
+                    img(src="/static/img/pay.png")
+                div.card-content
+                    p <b><center> Digital Payment</center></b>
+        div.card
+            h3 BookOrder
+            div.card-box
+                div.card-img
+                    img(src="/static/img/track.png")
+                div.card-content
+                    p <b>Users can track Orders</b>
+        div.card
+            h3 TrackOrder
+            div.card-box
+                div.card-img
+                    img(src="/static/img/bookorder.png")
+                div.card-content
+                    p <b>Users can book order</b>
+
+    //- section#sponsorsSection
+    //-     h2 Our Sponsors
+    
+    footer#footer
+        | our footer here
+    script
+      include ../static/index.js
