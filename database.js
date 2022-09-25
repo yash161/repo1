@@ -3,7 +3,7 @@ var con =mysql.createPool(
     {
         host:"localhost",
         user:"root",
-        password:"yash@123",
+        password:"root",
         database:"project"
     }
 );
