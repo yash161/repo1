@@ -3,15 +3,8 @@ var con =mysql.createPool(
     {
         host:"localhost",
         user:"root",
-        password:"root",
+        password:"yash@123",
         database:"project"
     }
 );
-// con.connect(function(error){
-//     if(!!error){
-//       console.log(error);
-//     }else{
-//       console.log('Connected!:)');
-//     }
-//   });  
 module.exports = con; 
