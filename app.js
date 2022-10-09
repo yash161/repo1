@@ -16,7 +16,7 @@ app.use(express.urlencoded())
 // PUG SPECIFIC STUFF
 app.set('view engine', 'pug') // Set the template engine as pug
 app.set('views', path.join(__dirname, 'views'))
-///encryption////////////////////////////////////////////////////////////////////////////////////////////////////
+///encryption////////////////////////////////////////////////////////////////////////////////
 const crypto = require('crypto');
 const algorithm = 'aes-256-cbc';
 const key = crypto.randomBytes(32);
@@ -76,14 +76,16 @@ app.get('/reg', (req, res) => {
 })
 app.post('/reg', function (request, response) {
     var username = request.body.uname;
+    var abc = encrypt(username)
     var password = request.body.psw;
     var age = request.body.age;
     var address = request.body.address;
+    console.log(abc)
     if (username && password) {
         connection.getConnection(function (err) {
             if (err) throw err;
             console.log("Connected!");
-            var sql = "Insert into userdata (username,password,age,address) VALUES ('" + encrypt(request.body.uname) + "','" + encrypt(request.body.psw) + "','" + encrypt(request.body.age) + "','" + encrypt(request.body.address) + "')"
+            var sql = "Insert into userdata (username,password,age,address) VALUES ('" + request.body.uname + "','" + request.body.psw + "','" + request.body.age + "','" + request.body.address + "')"
             response.redirect('/new1');
             connection.query(sql, function (err, result) {
                 if (err) throw err;
