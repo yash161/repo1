@@ -16,6 +16,32 @@ app.use(express.urlencoded())
 // PUG SPECIFIC STUFF
 app.set('view engine', 'pug') // Set the template engine as pug
 app.set('views', path.join(__dirname, 'views'))
+///encryption////////////////////////////////////////////////////////////////////////////////////////////////////
+const crypto = require('crypto');
+const algorithm = 'aes-256-cbc';
+const key = crypto.randomBytes(32);
+const iv = crypto.randomBytes(16);
+
+function encrypt(text) {
+ let cipher = crypto.createCipheriv('aes-256-cbc', Buffer.from(key), iv);
+ let encrypted = cipher.update(text);
+ encrypted = Buffer.concat([encrypted, cipher.final()]);
+ return { iv: iv.toString('hex'), encryptedData: encrypted.toString('hex') };
+}
+
+function decrypt(text) {
+ let iv = Buffer.from(text.iv, 'hex');
+ let encryptedText = Buffer.from(text.encryptedData, 'hex');
+ let decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
+ let decrypted = decipher.update(encryptedText);
+ decrypted = Buffer.concat([decrypted, decipher.final()]);
+ return decrypted.toString();
+}
+var hw = encrypt("Some serious stuff")
+console.log(hw)
+console.log(decrypt(hw))
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // ENDPOINTS
 app.get('/', (req, res) => {
     const params = {}
@@ -57,7 +83,7 @@ app.post('/reg', function (request, response) {
         connection.getConnection(function (err) {
             if (err) throw err;
             console.log("Connected!");
-            var sql = "Insert into userdata (username,password,age,address) VALUES ('" + request.body.uname + "','" + request.body.psw + "','" + request.body.age + "','" + request.body.address + "')"
+            var sql = "Insert into userdata (username,password,age,address) VALUES ('" + encrypt(request.body.uname) + "','" + encrypt(request.body.psw) + "','" + encrypt(request.body.age) + "','" + encrypt(request.body.address) + "')"
             response.redirect('/new1');
             connection.query(sql, function (err, result) {
                 if (err) throw err;
